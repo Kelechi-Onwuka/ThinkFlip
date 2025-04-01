@@ -1,0 +1,536 @@
+
+html, body {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+/* Set a soft green background for the entire page */
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #e6f2e1; /* soft green */
+    color: #2e2e2e; /* dark gray text */
+    text-align: center;
+    margin: 0;
+    padding: 20px;
+  }
+  
+  /* Title style */
+  h1 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 3rem;
+    color: #1a472a;
+    margin-bottom: 10px;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+    animation: fadeIn 1s ease-in;
+  }
+  
+  
+  /* Section for input fields and add button */
+  #input-section {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin: 30px auto 0 auto;
+    max-width: 800px; /* match flashcard width */
+    flex-wrap: wrap; /* lets it wrap on smaller screens */
+  }
+  
+  
+  #input-section input {
+    padding: 14px;
+    margin: 5px;
+    width: 300px;
+    font-size: 1rem;
+    border: 1px solid #999;
+    border-radius: 8px;
+  }
+  
+  #add-card-btn {
+    padding: 14px 28px;
+    font-size: 1rem;
+    background-color: #4e944f;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+  
+  
+  #add-card-btn:hover {
+    background-color: #3b773e; /* darker green on hover */
+  }
+  
+  #flashcard-container {
+    perspective: 1000px;
+    margin: 60px auto 30px;
+    width: 400px;        
+    height: 260px;       
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  /* Flashcard styling */
+  .card {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transition: transform 0.6s;
+    transform-style: preserve-3d;
+    cursor: pointer;
+  }
+  
+  /* Flipped state */
+  .card.flipped {
+    transform: rotateY(180deg);
+  }
+  
+  /* Front and back of the card */
+  .front,
+  .back {
+    background-color: #fdf6e3; /* soft brown/earthy cream */
+    color: black;
+    border: 2px solid #1a472a; /* dark green border */
+    border-radius: 12px;
+    padding: 20px;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    font-size: 1.1rem;
+    backface-visibility: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  /* Back of the card flipped */
+  .back {
+    transform: rotateY(180deg);
+  }
+  
+  
+  #navigation button {
+    padding: 10px 20px;
+    margin: 0 10px;
+    background-color: #2e2e2e; /* black/dark */
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+  
+  #navigation button:hover {
+    background-color: #444;
+  }
+  /* Modal background overlay */
+#welcome-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 50, 0, 0.7); /* dark greenish overlay */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999; /* stay on top */
+  }
+  
+  /* Modal box content */
+  .modal-content {
+    background-color: #fdf6e3; /* soft earthy cream */
+    padding: 30px;
+    border-radius: 12px;
+    text-align: center;
+    max-width: 500px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  }
+  
+  .modal-content h2 {
+    color: #1a472a; /* deep green */
+    margin-bottom: 10px;
+  }
+  
+  .modal-content p {
+    color: #333;
+    font-size: 1rem;
+    margin-bottom: 20px;
+  }
+  
+  /* "Let's Get Started" button */
+  #start-btn {
+    padding: 10px 20px;
+    background-color: #4e944f; /* green */
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+  }
+  
+  #start-btn:hover {
+    background-color: #3b773e; /* darker hover */
+  }
+  /* Fun Fact / Study Tip Section */
+  #study-fact-container {
+    text-align: center;
+    margin-top: 50px;
+    padding: 10px;
+    width: 100%;
+  }
+  
+  #study-fact-wrapper {
+    display: inline-block;
+    position: relative;
+    font-size: 1.1rem;
+    color: #2e2e2e;
+    font-style: italic;
+    opacity: 1;
+    transition: opacity 2s ease-in-out;
+  }
+  
+  #study-fact-wrapper.fade-out {
+    opacity: 0;
+  }
+  
+  #info-icon {
+    margin-left: 6px;
+    cursor: pointer;
+    color: #4e944f;
+    font-size: 1rem;
+    vertical-align: middle;
+    user-select: none;
+  }
+    
+  
+  #manage-buttons button {
+    padding: 8px 16px;
+    margin: 0 8px;
+    background-color: #1a472a;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s;
+  }
+  
+  #manage-buttons button:hover {
+    background-color: #336633;
+  }
+  /* Flex layout: Nav | Flashcard | Manage */
+  #card-section {
+    display: grid;
+    grid-template-columns: 1fr 480px 1fr;
+    align-items: center;
+    justify-content: center;
+    gap: 40px;
+    margin: 30px auto;
+    max-width: 1000px; /* Optional: allows more breathing room */
+  }
+  
+  
+  /* Navigation & Manage buttons stacked horizontally */
+  #nav-buttons,
+  #manage-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    align-items: center; /* center buttons horizontally */
+  }
+
+
+  
+  #nav-buttons button,
+#manage-buttons button {
+  width: 100%;
+  padding: 18px; /* increased from 14px */
+  font-size: 1.1rem; /* slightly larger text */
+  background-color: #2e2e2e;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+}
+  #nav-buttons button:hover,
+  #manage-buttons button:hover {
+    background-color: #444;
+  }
+  
+
+  /* Floating History Button */
+#history-toggle {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    padding: 12px 20px;
+    background-color: #4e944f;
+    color: white;
+    border: none;
+    border-radius: 30px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    font-weight: bold;
+    z-index: 1000;
+    transition: background-color 0.3s;
+  }
+  
+  #history-toggle:hover {
+    background-color: #3b773e;
+  }
+  
+  /* Slide-in History Panel */
+  #history-panel {
+    position: fixed;
+    top: 0;
+    right: -400px;
+    width: 350px;
+    height: 100%;
+    background-color: #fdf6e3;
+    box-shadow: -4px 0 12px rgba(0, 0, 0, 0.2);
+    transition: right 0.4s ease-in-out;
+    z-index: 999;
+    padding: 20px;
+    overflow-y: auto;
+  }
+  
+  #history-panel.open {
+    right: 0;
+  }
+  
+  #history-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  
+  #close-history {
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+  }
+  
+  #history-list {
+    list-style-type: none;
+    padding-left: 0;
+    font-size: 0.95rem;
+  }
+  
+  #history-list li {
+    margin-bottom: 12px;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+  }
+
+ 
+  /* Edit Modal Styling */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1001;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 50, 0, 0.6);
+  }
+  
+  .modal-content {
+    background-color: #fdf6e3;
+    margin: 10% auto;
+    padding: 20px;
+    border: 2px solid #1a472a;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 400px;
+    text-align: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    animation: slideIn 0.4s ease-in-out;
+  }
+  
+  @keyframes slideIn {
+    from {
+      transform: translateY(-20px);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+  
+  .modal-content input {
+    width: 90%;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+  }
+  
+  .modal-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+  }
+  
+  .modal-buttons button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    background-color: #4e944f;
+    color: white;
+  }
+  
+  .modal-buttons button:hover {
+    background-color: #3b773e;
+  }
+  .modal-content label {
+    display: block;
+    text-align: left;
+    margin-top: 10px;
+    margin-bottom: 5px;
+    color: #1a472a;
+    font-weight: bold;
+    font-size: 0.95rem;
+  }
+  #site-footer {
+    margin-top: auto;
+    font-size: 1rem;
+    color: #2e2e2e;
+    text-align: center;
+    padding: 20px 0;
+  }
+  .card, .front, .back {
+    box-sizing: border-box;
+  }
+  #undo-btn {
+    background-color: #2d6a4f; /* soft green */
+  }
+  #undo-btn:hover {
+    background-color: #22543d; /* darker on hover */
+  }
+  .undo-wrapper {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .undo-label {
+    position: absolute;
+    bottom: -28px;
+    background-color: #fdf6e3;
+    color: #1a472a;
+    font-size: 0.8rem;
+    padding: 4px 8px;
+    border-radius: 6px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    opacity: 0;
+    pointer-events: none;
+    white-space: nowrap;
+    transition: opacity 0.1s ease-in-out;
+    z-index: 10;
+  }
+  
+  .undo-wrapper:hover .undo-label {
+    opacity: 1;
+  }
+  .undo-wrapper button {
+    width: 100%;
+  }
+  .undo-wrapper {
+    width: 100%;
+  }
+  #tooltip-wrapper {
+    display: inline-block;
+    position: relative;
+  }
+  
+  #tooltip {
+    display: none;
+    position: absolute;
+    top: 120%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #fdf6e3;
+    border: 1px solid #4e944f;
+    color: #2e2e2e;
+    font-size: 0.9rem;
+    padding: 8px;
+    border-radius: 6px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 1;
+    text-align: center;
+  }
+  
+  #tooltip a {
+    color: #1a472a;
+    text-decoration: underline;
+  }
+  
+  #tooltip-wrapper:hover #tooltip {
+    display: block;
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  /* 📱 Mobile Responsiveness */
+@media (max-width: 768px) {
+    #card-section {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+    }
+  
+    #nav-buttons,
+    #manage-buttons {
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+    }
+  
+    #nav-buttons button,
+    #manage-buttons button {
+      width: 120px;
+    }
+  
+    #flashcard-container {
+      width: 90%;
+      height: 240px;
+    }
+  
+    #input-section {
+      flex-direction: column;
+      align-items: center;
+    }
+  
+    #input-section input {
+      width: 90%;
+    }
+  
+    #add-card-btn {
+      width: 90%;
+    }
+  
+    #study-fact-wrapper {
+      text-align: center;
+      padding: 10px;
+    }
+  }
+  
