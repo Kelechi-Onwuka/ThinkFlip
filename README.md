@@ -1,8 +1,8 @@
 # ThinkFlip
 
-A responsive flashcard web app built with HTML, CSS, and JavaScript. Users can create, flip, and manage flashcards to study efficiently.
+A responsive flashcard web app built with HTML, CSS, and JavaScript. Users can create, flip, and manage flashcards to study more effectively.
 
-Originally built for friends preparing for exams, ThinkFlip is now available for anyone looking for a fast, no-signup study tool. Future updates will include user accounts and cloud-synced flashcards.
+Originally built for friends preparing for exams, ThinkFlip is designed for anyone looking for a quick, no-signup study tool. Now includes persistent flashcard saving using local storage.
 
 ![ThinkFlip Screenshot](screenshot.png)
 
@@ -13,35 +13,34 @@ Originally built for friends preparing for exams, ThinkFlip is now available for
 - Edit or delete flashcards
 - Undo recent deletions
 - View flashcard history
-- Rotating study tips
+- Study tips that rotate automatically
+- **Flashcards are saved automatically (via browser local storage)**
+- **"Welcome Back" message for returning users**
 - Mobile-friendly layout
 
 ## Mobile Usage
-
 *Mobile-friendly, but best used on a laptop or desktop.*
 
 ## How to Use
 
-1. Open the `index.html` file in a browser  
-   — or visit the **live version** here:  
-   👉 [https://kelechi-onwuka.github.io/ThinkFlip](https://kelechi-onwuka.github.io/ThinkFlip)
-
+1. Open the `index.html` file in a web browser
 2. Enter a question and answer
-3. Click **Add Flashcard**
+3. Click "Add Flashcard"
 4. Use **Flip**, **Next**, and **Previous** to navigate
+
+> A live version is also available here:  
+> **[https://kelechi-onwuka.github.io/ThinkFlip](https://kelechi-onwuka.github.io/ThinkFlip)**
 
 ## Tech Stack
 
 - HTML
-- CSS (Flexbox, Grid, responsive design)
-- JavaScript (DOM manipulation, local storage)
-- No external libraries or frameworks
+- CSS (Responsive design with Flexbox & Grid)
+- JavaScript (DOM manipulation + localStorage)
 
 ## Planned Features
 
 - User authentication (sign up / login)
-- Cloud sync: save flashcards to an account
-- Improved mobile UI
+- Flashcard syncing across devices using a database
 
 ---
 
