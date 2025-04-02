@@ -2,11 +2,11 @@
 // ThinkFlip Flashcard Logic
 // ==========================
 
-// Load flashcards from localStorage 
-let flashcards = JSON.parse(localStorage.getItem("flashcards")) || [];
+// Data Storage
+let flashcards = [];             // Array to hold all flashcards
 let currentCardIndex = 0;        // Current index being displayed
-let lastDeletedCard = null;      // For undoing deletes
-let lastDeletedIndex = null;     // Index of last deleted card
+let lastDeletedCard = null;      // Temporarily holds last deleted card for undo
+let lastDeletedIndex = null;     // Holds index of deleted card for restoring
 
 // Element References
 const questionInput = document.getElementById("question-input");
@@ -60,7 +60,6 @@ addButton.addEventListener("click", () => {
   answerInput.value = "";
   currentCardIndex = flashcards.length - 1;
   showCard(currentCardIndex);
-  localStorage.setItem("flashcards", JSON.stringify(flashcards));
 });
 
 // Navigation Buttons
@@ -94,8 +93,6 @@ deleteBtn.addEventListener("click", () => {
   flashcards.splice(currentCardIndex, 1);
   currentCardIndex = Math.max(currentCardIndex - 1, 0);
   showCard(currentCardIndex);
-  localStorage.setItem("flashcards", JSON.stringify(flashcards));
-
 });
 
 // Undo Delete
@@ -104,8 +101,6 @@ undoBtn.addEventListener("click", () => {
     flashcards.splice(lastDeletedIndex, 0, lastDeletedCard);
     currentCardIndex = lastDeletedIndex;
     showCard(currentCardIndex);
-    localStorage.setItem("flashcards", JSON.stringify(flashcards));
-
     lastDeletedCard = null;
     lastDeletedIndex = null;
   } else {
@@ -131,8 +126,6 @@ modalSaveBtn.addEventListener("click", () => {
   if (newQ && newA) {
     flashcards[currentCardIndex] = { question: newQ, answer: newA };
     showCard(currentCardIndex);
-    localStorage.setItem("flashcards", JSON.stringify(flashcards));
-
     editModal.style.display = "none";
   } else {
     alert("Please fill in both fields!");
@@ -144,24 +137,10 @@ modalCancelBtn.addEventListener("click", () => {
   editModal.style.display = "none";
 });
 
-// Enhanced Welcome Modal with Return Visitor Message
-const modal = document.getElementById("welcome-modal");
-const startBtn = document.getElementById("start-btn");
-const welcomeText = modal.querySelector("h2");
-const welcomeParagraph = modal.querySelector("p");
-
-const hasVisitedBefore = localStorage.getItem("hasVisited");
-
-if (hasVisitedBefore && flashcards.length > 0) {
-  welcomeText.textContent = "Welcome back!";
-  welcomeParagraph.innerHTML = "Your flashcards are still here. Want to add more?";
-}
-
-startBtn.addEventListener("click", () => {
-  modal.style.display = "none";
-  localStorage.setItem("hasVisited", "true");
+// Welcome Modal Dismissal
+document.getElementById("start-btn").addEventListener("click", () => {
+  document.getElementById("welcome-modal").style.display = "none";
 });
-
 
 // =========================
 // Fun Fact Rotator
