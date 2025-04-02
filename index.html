@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Thinkflip! - Flashcards for Everything</title>
+
+  <!-- Font: Poppins for styled header -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap" rel="stylesheet">
+  
+  <!-- External CSS -->
+  <link rel="stylesheet" href="thinkflip.css" />
+</head>
+<body>
+
+  <!-- Site Title & Tagline -->
+  <h1>ThinkFlip!</h1>
+  <p>Upload your questions and answers. Flip to study. Master anything!</p>
+
+  <!-- Main Flashcard Interface Section -->
+  <div id="card-section">
+
+    <!-- Navigation Buttons (Left of Flashcard) -->
+    <div id="nav-buttons">
+      <button id="prev-btn">Previous</button>
+      <button id="flip-btn">Flip</button>
+      <button id="next-btn">Next</button>
+    </div>
+
+    <!-- Flashcard Display Area -->
+    <div id="flashcard-container">
+      <div id="flashcard" class="card">
+        <div class="front">Your question will appear here</div>
+        <div class="back">Your answer will appear here</div>
+      </div>
+    </div>
+
+    <!-- Flashcard Management Buttons (Right of Flashcard) -->
+    <div id="manage-buttons">
+      <button id="edit-btn">Edit</button>
+      <button id="delete-btn">Delete</button>
+      <div class="undo-wrapper">
+        <button id="undo-btn">Undo</button>
+        <div class="undo-label">Undo last deleted flashcard</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Flashcard Creation Form -->
+  <div id="input-section">
+    <input type="text" id="question-input" placeholder="Enter your question" />
+    <input type="text" id="answer-input" placeholder="Enter your answer" />
+    <button id="add-card-btn">Add Flashcard</button>
+  </div>
+
+  <!-- Quick Inline Edit Form (used on mobile) -->
+  <div id="edit-form" style="display: none;">
+    <input type="text" id="edit-question" placeholder="Edit question..." />
+    <input type="text" id="edit-answer" placeholder="Edit answer..." />
+    <button id="save-edit">Save</button>
+    <button id="cancel-edit">Cancel</button>
+  </div>
+
+  <!-- Welcome Modal (First Load Greeting) -->
+  <div id="welcome-modal">
+    <div class="modal-content">
+      <h2>Think it. Flip it. Master it!</h2>
+      <p>
+        Hi there! Welcome to <strong>ThinkFlip</strong>, your personal digital flashcard hub —
+        the ultimate study sidekick that helps you sharpen your mind, one card at a time.
+      </p>
+      <button id="start-btn">Let’s Get Started</button>
+    </div>
+  </div>
+
+  <!-- Study Tip Rotator + Tooltip Attribution -->
+  <div id="study-fact-wrapper">
+    <p id="study-fact">💡 Study Tip: Stay hydrated while studying. Water fuels your brain!</p>
+    <div id="tooltip-wrapper">
+      <span id="info-icon">ℹ️</span>
+      <div id="tooltip">
+        Inspired by Julien Beaulieu’s blog:<br>
+        <a href="https://julienbeaulieu.github.io/2020/05/25/lesser-known-facts-about-learning-how-to-get-better-at-studying/" target="_blank">julienbeaulieu.github.io</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Slide-In History Panel (Right Sidebar) -->
+  <div id="history-panel">
+    <div id="history-header">
+      <h3>Flashcard History</h3>
+      <button id="close-history">✖</button>
+    </div>
+    <ul id="history-list"></ul>
+  </div>
+
+  <!-- Edit Flashcard Modal (Popup) -->
+  <div id="edit-modal" class="modal">
+    <div class="modal-content">
+      <h3>Edit Flashcard</h3>
+      <label for="modal-edit-question"><strong>Question:</strong></label>
+      <input type="text" id="modal-edit-question" placeholder="Edit question..." />
+      <label for="modal-edit-answer"><strong>Answer:</strong></label>
+      <input type="text" id="modal-edit-answer" placeholder="Edit answer..." />
+      <div class="modal-buttons">
+        <button id="modal-save-btn">Save</button>
+        <button id="modal-cancel-btn">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Floating Button to Open Flashcard History -->
+  <button id="history-toggle">🗂 View History</button>
+
+  <!-- Footer -->
+  <footer id="site-footer">
+    Made with ❤️ by <strong>Kelechi Onwuka</strong>
+  </footer>
+
+  <!-- JavaScript Logic -->
+  <script src="thinkflip.js" defer></script>
+</body>
+</html>
+
